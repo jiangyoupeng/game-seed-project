@@ -1,0 +1,38 @@
+{
+    "name": "game-sead-tool",
+    "package_version": 2,
+    "version": "1.0.0",
+    "description": "jyp种子项目工具",
+    "author": "jyp",
+    "main": "browser.js",
+    "contributions":{
+        "messages": {
+            "createJsonTs": {
+                "methods": ["createJsonTs"]
+            },
+            "createPbTs": {
+                "methods": ["createPbTs"]
+            },
+            "createNetPbTs": {
+                "methods": ["createNetPbTs"]
+            }
+        },
+        "menu": [
+            {
+                "path": "种子工具/元代码数据生成",
+                "label": "创建excel-json数据框架",
+                "message": "createJsonTs"
+            },
+            {
+                "path": "种子工具/元代码数据生成",
+                "label": "创建excel-pb数据框架",
+                "message": "createPbTs"
+            },
+            {
+                "path": "种子工具/元代码数据生成",
+                "label": "生成net message数据代码",
+                "message": "createNetPbTs"
+            }
+        ]
+    }
+}

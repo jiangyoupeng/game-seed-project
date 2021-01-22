@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package pb;
+
+import "base.proto";
+
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+option java_package = "com.yy.wolfkill.h5game.ludoking.pb";
+option java_multiple_files = true;
+
+message GetAllSkin2Req{
+
+
+}
+
+//用户的皮肤数据
+message UserSkin2Message{
+    int64 crystalCoin = 1; //用户拥有的水晶币数量
+
+    repeated Skins1Msg decorated = 2; //当前装扮的皮肤列表
+    repeated Skins1Msg owners = 3; // 拥有的皮肤列表
+
+    int64 diamond = 4; // 钻石皮肤
+}
+
+// 获取钻石
+message DiamondGetReq{
+    bool forceQuery = 1; //是否强制获取钻石数量
+}
+
+message DiamondGetRes{
+    bool forceQuery = 1; //是否强制获取钻石数量
+    int64 diamond = 4; // 钻石数量
+
+    int32 code = 15; //错误码
+}
+message GetAllSkin2Res{
+    UserSkin2Message skin = 1;
+    string uid = 2;
+    int32 code = 100;
+}
+//获取皮肤的配置数据
+message SkinSetting2Msg{
+    int32 type = 1; //皮肤的类型，0表示棋子，1表示骰子，2表示花纹 ， 3 主题
+    int32 id = 2; //皮肤的id ，
+    int32 defSkin = 3; //是否默认皮肤，0表示不是，1表示是
+    int32 minLevel = 4; //最小等级，0表示没有限制
+    int32 minScene = 5; //最小的场次，0表示场次没有限制，minScene，minLevel其中必有一个为0
+    int64 skinCoin = 6; //皮肤购买价格
+    int32 order = 7; //排序字段，数字小的排在前面
+    int32 quality = 8; //皮肤的品质
+    int64 coinType = 9;//皮肤类型，0 皮肤币  1 钻石币
+    int64 sourceCoin = 10; //原价
+}
+
+//获取皮肤设置
+message GetSkinSetting2Req{
+
+}
+
+message GetSkinSetting2Res{
+    repeated SkinSetting2Msg skins = 1;
+}
+
+//购买皮肤
+message BuySkin2Req{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+}
+
+message BuySkin2Res{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+    int64 crystalCoin = 3; //剩下的水晶币
+    int64 diamond = 4; //剩下的钻石
+
+    int32 code = 100; //0表示购买成功，1表示皮肤币不足，2表示重复购买，3表示未到达购买条件
+}
+//装扮皮肤
+message DecorateSkin2Req{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+}
+
+message DecorateSkin2Res{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+
+
+    int32 code = 100; //0表示成功 ，1表示还未拥有
+}

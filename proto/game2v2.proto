@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+import "base.proto";
+
+package pb;
+
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+option java_package = "com.yy.wolfkill.h5game.ludoking.pb";
+option java_multiple_files = true;
+
+
+//发起匹配
+//进入组队界面是如果玩家金币不足最低场次，主动补发（等到房主点击匹配按钮后再补发效果不好），保证低级场次不会有余额不足的情况
+message Match2v2Req{
+    int32 grade = 1;//初中高 ，1表示初级， 2表示中级， 3表示高级
+
+}
+
+message Match2v2Res{
+    int32 grade = 1;  //初中高 ，1表示初级， 2表示中级， 3表示高级
+    int32 code = 15; // 1 有玩家未准备  2 有玩家金钱不足（高级场出现）
+}
+
+message Match2v2SuccessRes{
+    int32 code = 1;//场次 0成功
+    string roomId =2;//
+    int64 timestamp=3;
+    string opt = 4;
+    string sign = 5;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 grade = 7;//初中高 ，1表示初级， 2表示中级， 3表示高级
+
+    repeated string team1 = 8; // 其中一队的玩家uid，匹配界面展示用数据
+    repeated string team2 = 9;// 另外一队的玩家uid，匹配界面展示用数据
+    string sn = 15;
+}
+
+//进入2v2组队界面
+message Match2v2EnterRoomReq{
+    string roomId = 1; //空表示进入新的组队页面，不空表示接受邀请后要进入的界面
+}
+
+//收到该协议，发起新的连接
+//除了前端主动触发，2v2游戏结束后也会下推该协议，被邀请用户如果进来时房间人数已满也会下发该协议
+message Match2v2EnterRoomRes{
+    string roomId =1;//
+    int64 timestamp=2;
+    string opt = 3;
+    string sign =4;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 code =5;//0成功 1 房间不存在
+
+}
+
+//上报玩家状态
+message Match2v2StageChangeReq{
+    int32 state = 1; //0准备（玩家进入游戏中自动切换为准备状态），1 未准备
+}
+
+message Match2v2UserState{
+    string uid = 1; //玩家uid
+    int32 state = 2; // 0准备状态， 1未准备状态
+    int64 coin = 3; //玩家的金币
+}
+//上报玩家状态时会触发， 新玩家进入也会下发（第一个玩家进入也触发）， 玩家退出也触发
+message Match2v2StageChangeRes{
+    repeated Match2v2UserState users = 1; //玩家状态，第一个玩家就是房主
+    int32 code = 15;
+}
+
+//退出2v2组队界面
+message Match2v2ExitRoomReq{
+
+}
+
+//收到该协议，发起新的连接
+message Match2v2ExitRoomRes{
+    string roomId =1;//
+    int64 timestamp = 2;
+    string opt = 3;
+    string sign =4;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 code =5;//0成功 1 房间不存在
+
+}

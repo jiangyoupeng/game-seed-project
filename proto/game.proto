@@ -1,0 +1,1196 @@
+syntax = "proto3";
+
+import "base.proto";
+
+package pb;
+
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+option java_package = "com.yy.wolfkill.h5game.ludoking.pb";
+option java_multiple_files = true;
+
+// readyGoRes协议
+message ReadyGoRes {
+    int32 code = 1;
+    string msg = 2;
+    ReadyGoResData data = 3;
+}
+message ReadyGoResData {
+
+    string first_uid = 1;  //下一个用户id
+    
+    string ai_config = 2;  //ai的配置
+    
+    repeated Flyer flyer = 3 ; //游戏操作者
+    
+    ChessBoard chessboard = 4 ; //棋盘
+    
+    int64  start_time = 5 ; // 时间戳，精确到毫秒
+    
+    repeated pb.Player players = 6 ; //玩家数据
+    
+    int64 roundEndTime = 7; //回合时间
+
+    repeated UserData userDatas = 8; //玩家的基础数据
+
+    int64 loseCoin = 9; // 输家的金币
+    int64 winCoin = 10; // 赢家的金币
+
+    int32 gameMode = 11; //1普通比赛，4竞赛模式，5 2v2模式 6
+
+
+
+}
+
+
+
+//游戏的操作者
+message Flyer {
+    string uid = 1; //对应的uid
+    int32 color = 2; //0-3,表示操作者的颜色，
+    int32 plane_num = 3; //操作者能够操作的棋子数量，现在只有4一个选项
+    repeated Position path = 4 ; //玩家的可移动路径
+    repeated Position safe_positions = 5 ; //安全点列表
+    int32 guide_player = 6; // 0表示不需要新手引导， 1表示需要新手引导， ai一定返回不需要。
+}
+
+message ChessBoard {
+   repeated AirPortPlane airport_planes = 1;
+   repeated Plane plane = 2; //返回已经起飞的棋子列表
+}
+
+message AirPortPlane{
+   int32 color = 1; //飞机场的编号，从0到3
+   int32 plane = 2; // 飞机场停留的飞机列表，飞机编号取0到3
+   int32 pos    = 3 ; //飞机停留的位置，0到3
+}
+//棋子
+message Plane{
+   int32 x = 1; //飞机停留位置x
+   int32 y = 2; //停留的位置y
+   int32 color = 3; //属于那个阵营的玩家
+   int32 plane = 4; //飞机编号
+}
+
+//竞赛结束相关的数据
+message RaceGameOverMessage{
+    string winUid = 1; //竞赛胜利者的uid
+    repeated RaceUserMessage users = 2; //竞赛用户数据
+    int64 baseAwardCount = 3; //基础奖励
+    RaceAwardMessage raceAward = 4; //奖励的内容
+    int64 ticketCoin = 5; //门票售价
+    int64 extraCoin=6;//连胜的额外奖励
+
+}
+
+
+
+message RaceUserMessage{
+    string uid = 1;
+    int32 winCount = 2; //胜利次数
+    int32 bestWinCount = 3; //最大胜利次数
+    int32 shareCount = 4; //剩下的分享次数
+    string shareId = 5; // 分享id
+    int32 rebornCount = 6; // 剩下的复活分享次数
+    string rebornId = 7; // 复活分享id
+    int32 leftFreeTicket = 8; //剩下的门票数
+    int32 leftBuyTicket = 9; //购买门票
+    int32 dayLeftRebornCount =10;//当天剩下的分享复活次数
+}
+
+//
+message SixModeGameOverMessage{
+    repeated int32 rank = 1; //玩家排名，1第一名，2第二名，3第三名... 顺序跟游戏结果里面的userData顺序一致
+    repeated int32 coinChange = 2; //玩家获得的奖励，顺序跟游戏结果里面的userData顺序一致
+}
+
+message GhostModeGameOverMessage{
+    repeated RewardItem winArwards = 1; //获取的奖励
+    repeated RewardItem lostArwards = 2; //失败者奖励
+    repeated string winners = 3; //胜利者
+
+    int32 ghostScore = 4; //鬼的分数
+    int32 userScore = 5; //玩家的分数
+}
+// GameOverRes协议
+message GameOverRes {
+    int32 code = 1;
+    string msg = 2;
+    GameOverResData data = 3;
+}
+
+
+message GameOverResData {
+    string reason = 1;
+    string winUid = 2;
+    string winTeamid = 3;
+    GameResult result = 4;
+
+    int32 grade = 5;//初中高 ，1表示初级， 2表示中级， 3表示高级
+    int32 gameType = 6;//2人 和4人 ， 2表示2人场， 4表示四人场
+
+    repeated UserLevelMessage userMessages = 7; //所有玩家的等级变化数据
+    repeated UserData userData = 8 ; // 玩家的基础数据
+
+    bool needQueryAiInvite = 9; //是否需要查询ai邀请数据。
+
+    int32 winnerMuti = 10; //胜利者观看视频增加的倍数，该值除以100表示真正的倍数。0表示不用翻倍
+    string videoId = 11; //领取视频奖励的id
+
+    RaceGameOverMessage message = 12; //竞赛相关的消息
+    int32 gameMode = 13; //1普通比赛， 4竞赛模式，5是2v2模式
+
+    SixModeGameOverMessage sixmodeMessage = 14; //6人模式结果消息
+
+    GhostModeGameOverMessage ghostModeMessage = 15; //捉鬼模式数据
+
+
+
+}
+
+    message UserLevelMessage{
+    string uid = 1;
+    LevelMessage pre = 2; //游戏结束前的等级数据
+    LevelMessage cur = 3; //游戏结束后的等级数据
+}
+
+message GameResult {
+    int32 timestamp = 1;
+    string nonstr = 2;
+    string sign = 3;
+    string gametype = 4;
+    GameResultDetail result = 5;
+}
+
+message GameResultDetail {
+    string gameid = 1;
+    string roomid = 2;
+    string channelid = 3;
+    string resulttype = 4;
+    repeated string users = 5;
+    repeated string winners = 6;
+
+    repeated string jifen = 7;
+    int32 subgamemode = 8;
+    int32 juci = 9;
+    repeated string hallId = 10;
+
+}
+
+message TeamsDetail {
+    string teamid = 1;
+    repeated string uids = 2;
+}
+
+// 断线重连协议
+message ReLoginRes {
+    int32 code = 1;
+    string msg = 2;
+    ReLoginResData data = 3;
+}
+message ReLoginResData {
+    string stage = 1;    // 游戏当前阶段,load,ready,start,finish
+    
+    string curuid = 2 ;  //当前玩家id
+    
+    int32 dicenum = 3 ; // 骰子数
+    
+    string ai_config = 4;  //ai的级别
+    
+    repeated Flyer flyer = 5 ; //游戏操作者
+    
+    ChessBoard chessboard = 6 ; //棋盘
+    
+    int64 roundEndTime = 7 ; // 回合剩下时间，单位秒
+    
+    DiceNumResType dicetype = 8; //骰子状态，重连时可能发现骰子是666状态，不能进行下一步
+    
+    repeated pb.Player players = 9;
+
+    int64 coin = 10;         // 金币
+
+    int32 gameMode = 11;         // 游戏模式： 0:大厅  1 ： 游戏中 ,4 竞赛模式
+
+    int32 leftSecond = 12; // 剩下的签到时间，单位秒
+
+    repeated UserData userDatas = 13; //玩家的基础数据
+
+    int64 loseCoin = 14; // 输家的金币
+    int64 winCoin = 15; // 赢家的金币
+    
+}
+
+//自定义协议
+
+//获取一个随机的色子点数
+message DiceNumReq{
+   int32 num = 1; //测试时可以传递num,后台直接使用该字段构造此回合的骰子数
+}
+//色子数返回结果
+message DiceNumRes{
+   int32 code = 1;
+   string msg = 2;
+   DiceNumData data =3;
+}
+
+message DiceNumData{
+   int32 num = 1;
+   int64 roundEndTime = 2; //下一个回合的结束时间戳
+   DiceNumResType type = 3 ; //骰子事件类型
+
+   
+}
+
+enum DiceNumResType{
+   COMMON = 0; //普通骰子事件
+   FAIL666 = 1; //发生了连续三个6事件，要阻止继续当前回合进行
+}
+
+message MoveReq{
+   int32 color = 1;
+   int32 plane = 2;
+   
+   MoveType type = 3;
+   int32 diceNum = 4 ; //移动的格子数，从1到6
+}
+
+
+
+enum MoveType{
+   NORMAL = 0; //普通移动
+   TAKEOFF = 1; //起飞
+   NOMOVE = 2; //没有移动
+   
+}
+
+//出事的飞机
+message CrashPlane {
+   int32 color = 1; //玩家的编号，从0到3
+   int32 plane = 2; //飞机的编号也是0到3
+   int32 x = 3; //飞机出事前的x坐标
+   int32 y = 4; //飞机出事后的y坐标
+   
+   int32 pos = 5; //被打回的机场位置
+}
+
+message Position{
+   int32 x = 1;
+   int32 y = 2;
+}
+
+message MoveRes{
+   int32 code = 1;
+   string msg = 2;
+   MoveResData data= 3;
+}
+
+message MoveResData{
+   string uid = 1;
+   Plane plane = 2; //普通移动时的飞机
+   AirPortPlane airport_plane = 3; //起飞时的飞机
+   MoveType type = 4;
+   
+   repeated CrashPlane crashPlanes = 5;
+   string next_uid =6;
+   
+   int64 roundEndTime = 7; //下一个回合的结束时间戳
+   
+   int32 diceNum = 8 ; //骰子数
+
+   bool extendRoundOn2v2 = 9; // 是否是2v2模式下的额外回合
+}
+
+//用户离开的协议
+message PlayExitReq{
+
+}
+
+//这个广播出去 如果用户 超时了或者主动点了退出都会调用这个告诉
+message PlayExitRes{
+    int32 code = 1;
+    string msg = 2;
+    string uid = 3;//
+}
+
+
+//用户重新进入房间,只有游戏进行中才返回
+message PlayReEnterRes{
+    int32 code = 1;
+    string msg = 2;
+    string uid = 3;//
+}
+ message MatchReq{
+    int32 grade = 1;//初中高 ，1表示初级， 2表示中级， 3表示高级
+    int32 gameType =2;//2人 和4人 ， 2表示2人场， 4表示四人场
+    string sn = 100;
+}
+
+message MatchRes{
+    int32 code = 1;//场次 0成功  1不成功 2 有成员金币不足 3有人没准备 4匹配超时
+    string roomId =2;//
+    int64 timestamp=3;
+    string opt = 4;
+    string sign =5;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    string problemUid =6; //出现问题的匹配成员
+    int32 gameType =7;//2或者4
+    string sn = 100;
+}
+
+message CancelMatchReq{
+    string sn = 100;
+}
+
+message CancelMatchRes{
+    int32 code = 1;
+}
+
+
+message ReJoinRes{
+    string roomId =1;//
+    int64 timestamp=2;
+    string opt = 3;
+    string sign =4;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    bool canNotJoin= 5;
+    string sn = 100;
+}
+//请求新房间
+message NewRoomReq{
+
+}
+
+message NewRoomRes{
+    string roomId =1;//
+    int64 timestamp=2;
+    string opt = 3;
+    string sign =4;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+}
+
+//发起签到
+message SignReq{
+
+}
+
+message SignRes{
+    int64 coin = 1; //签到奖励的金币
+    int32 leftSecond = 2; // 剩下的签到秒
+    int32 code = 100; // 未到签到时间
+}
+
+
+//获取玩家所有当前数据
+message GetAllUserMessageReq{
+
+}
+
+message GetAllUserMessageRes{
+    repeated UserData userDatas = 1; // 房间内玩家的所有数据
+    int64 loseCoin = 2; // 输家的金币
+    int64 winCoin = 3; // 赢家的金币
+    int32 code = 100; // 异常码
+}
+
+//检查这个人是否可以转转盘
+message CheckZhuanPanReq{
+
+}
+
+message CheckZhuanPanRes{
+  int32 code =1;//0代表可以  1代表不行
+  int64 zhuanPanTime = 2;//返回下次可以转盘的时间
+  int64 serverTime = 3;//服务器当前时间
+  repeated ZhuanpanEntityPB zhuanPans =4;
+}
+
+message ZhuanpanEntityPB{
+   int32 id = 1;
+   int32 money = 2;
+}
+
+message ZhuanPanReq{
+
+}
+
+message ZhuanPanRes{
+    int32 code =1;//0代表可以  1代表失败
+    int64 zhuanPanTime = 2;//返回下次可以转盘的时间
+    ZhuanpanEntityPB zhuanpanPB = 3;//这次转到的是哪个
+    int32 totalMoney =4;
+}
+
+//分享相关
+
+//获取分享次数数据
+message ShareMessageReq{
+    //
+}
+message ShareMessageRes{
+    //
+    int32 leftCount = 1; //剩余分享次数
+    int64 nextRefreshTime = 2; // 下次刷新分享次数的时间戳，精确到秒
+    int64 shareCoin = 3; //分享一次能拿多少钱
+}
+//领取分享奖励
+message ShareAwardReq{
+    string sn = 1; //分享流水號
+}
+
+message ShareAwardRes{
+    int32 leftCount = 1; //剩下分享次数
+    int64 coin = 2; // 分享后用户新的金币数量，
+    string sn = 3;
+    int32 code = 100; // 0表示分享成功， 1表示分享次数限制
+}
+
+
+
+//// 玩家选择皮肤接口，大厅模式可以调用
+//message SkinChooseReq{
+//    int32 skinId = 1 ; // 玩家选择的皮肤，1表示男士皮肤， 2表示女性皮肤
+//}
+//
+//message SkinChooseRes{
+//    int32 skinId = 1;
+//
+//    int32 code = 100;
+//}
+message PlayerStatus{
+    string uid=1;
+    int32 status = 2;//0准备 1未准备 2已经离开
+}
+message PlayerStatusRes{
+    repeated PlayerStatus playerStatus=1;
+    string masterUid =2;
+}
+
+//获取随机的ai的uid
+message AiUidGetReq{
+
+}
+
+message AiUidGetRes{
+    //ai的uid
+    string uid = 1;
+    int32 code = 100; //获取随机的ai的uid
+}
+//准备跟ai玩，玩家跟ai玩的次数是有限的，最多10次
+message PlayWithAiReq{
+    string uid = 1; // ai的uid ，会校验该uid是否合法，不合法不返回请求
+}
+
+message PlayWithAiRes{
+    string uid = 1; // ai的uid
+
+    string roomId =2;// 构造连接
+    int64 timestamp=3;
+    string opt = 4;
+    string sign =5;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+
+    int32 code = 100; //是否成功 , 1表示金币不足，无法跟ai玩。
+}
+
+
+//查询托管状态
+message QueryAutoStatusReq{
+
+}
+
+// 处于托管状态每次都会下发 ，在玩家每次摇骰子和选择棋子事件后都会触发
+message QueryAutoStatusRes{
+    bool auto = 1; //是否处于托管状态
+    int32 count = 2; //第几次托管了
+    int64 existedSecond = 3; // 持续时间
+}
+// 取消托管状态
+message CancelAutoStatusReq{
+
+}
+
+message CancelAutoStatusRes{
+    int32 code = 100; //取消托管成功
+}
+
+//快捷文字广播协议
+message WordBroadCastReq{
+    string msg = 1;
+}
+
+message StateChangeReq{
+    int32 status = 1;//0准备 1未准备 2已经离开
+}
+
+message StateChangeRes{
+    string uid=1;
+    int32 status = 2;//0准备 1未准备 2已经离开
+    string newMaster =3;//新的master uid 如果有的话
+}
+message WordBroadCastRes{
+    string msg = 1;
+    string uid = 2;
+}
+
+//发送消息道具
+message MsgItemSendReq{
+    int32 itemId = 1;
+    string toUid = 2;  //
+}
+
+//发送消息道具
+message MsgItemSendRes{
+    int32 itemId = 1; //
+    string toUid = 2; //
+    string fromUid = 3;
+
+    int64 coin = 4; // 玩家剩余的金币数
+
+    int32 code = 100; // 消息异常码 ， 1表示玩家金币不足
+}
+
+// 一开始通知玩家当前等级以及经验
+// 游戏结束通知玩家获取的经验
+
+// 获取当前的转盘奖励数据，包括奖励表以及能量值
+
+// 转盘获取奖励。
+message ZhuanpanLevelMessage{
+    int32 id = 1;
+    int32 money = 2;
+    int32 preMoney = 3; //上一级的奖励金额
+    int32 updateCount = 4; //转盘升级了几次，一开始是1
+}
+
+message ReJoinRoomReq{
+    string roomId =1;
+}
+
+//前端收到这个协议后要跳转到这个房间
+message ReJoinRoomRes{
+    string roomId =1;//
+    int64 timestamp=2;
+    string opt = 3;
+    string sign =4;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 code =5;//0成功 1 房间不存在
+    string sn = 100;
+}
+
+//摇转盘
+message ZhuangPanLevelReq{
+    bool userCoin = 1; //是否使用金币摇转盘，只有没有能量点才能用金币摇转盘。
+}
+
+message ZhuangPanLevelRes{
+    bool userCoin = 1;
+    ZhuanpanLevelMessage zhuanPan = 2; //获取到的基础奖励数据
+    int32 leftPoint = 3; //剩余能量点数
+    int64 leftCoin = 4; //摇完转盘后剩下的金币
+    int32 currentTimes = 5; //当前奖励是几倍的奖励，默认是1倍，有可能是3倍。
+
+    int32 nextTimes = 6; // 下次奖励的倍数。
+
+    int32 code = 100; // 0表示成功， 1表示能量点不足，2表示拥有能量点了，不能使用金币 3表示金币数额不足
+}
+// 通知游戏当前升级动画已经播放
+message ZhuangPanLevelUpTipReq{
+
+}
+
+message ZhuangPanLevelUpTipRes{
+    int32 code = 100; // 0表示成功
+}
+//gameOver时调用
+// 检查是否需要ai邀请
+message CheckIfNeedAiInvoiteReq{
+    string opponentUid = 1; //对手uid
+}
+
+message CheckIfNeedAiInvoiteRes{
+    string opponentUid = 1; //对手uid
+    bool needInvited = 2; //是否需要邀请
+}
+message SecUnvarnishedReq {
+    bytes data = 1;
+}
+message SecUnvarnishedRes {
+    int32 code = 1;
+    string msg = 2;
+    bytes data = 3;
+}
+//直接胜利或者失败
+//直接返回gameover
+message WinOrLoseRightNowReq{
+    bool win = 1; // 胜利还是失败
+}
+//测试接口新增皮肤币
+message AddCrystalCoinReq{
+    int64 crystalNum = 1; //添加皮肤币
+}
+
+message AddCrystalCoinRes{
+    int64 crystalCoin = 1; //添加后的皮肤币数量
+}
+
+
+//测试接口新增金币
+message AddCoinReq{
+    int64 crystalNum = 1; //添加皮肤币
+}
+
+message AddCoinRes{
+    int64 crystalCoin = 1; //添加后的皮肤币数量
+}
+// 任务信息
+message TaskInfoReq {
+}
+
+// 服务器下推更新的任务
+message TaskInfoRes {
+    ModuleTask task = 1;
+}
+
+// 领取任务奖励
+message TaskRewardReq {
+    int32 taskId = 1;       // 任务ID
+}
+
+message TaskRewardRes {
+    int32 code = 1;
+    string msg = 2;
+    int32 taskId = 4;
+    repeated RewardItem itemList = 3;
+}
+//完成一次进语音房。
+message EnterYuYinFanReq{
+
+}
+
+message EnterYuYinFanRes{
+
+}
+
+// 皮肤版本新协议
+
+// 带皮肤的任务信息
+message TaskInfo1Req {
+}
+
+// 服务器下推更新的任务
+message TaskInfo1Res {
+    ModuleTask task = 1;
+
+    int32 curPoint = 2; //宝箱的进度
+}
+
+// 领取任务奖励
+message TaskReward1Req {
+    int32 taskId = 1;       // 任务ID
+}
+
+message TaskReward1Res {
+    int32 code = 1;
+    string msg = 2;
+    int32 taskId = 4;
+    repeated RewardItem itemList = 3;
+}
+
+
+
+//转盘新协议
+// 转盘获取奖励。
+message ZhuanpanLevel1Message{
+    int32 id = 1;
+    int32 money = 2;
+    int32 preMoney = 3; //上一级的奖励金额
+    int32 updateCount = 4; //转盘升级了几次，一开始是1
+    int32 type = 5; //奖励的类型，0表示金币，1表示水晶币
+}
+message ZhuangPanLevel1MessageReq{
+
+}
+
+message ZhuangPanLevel1MessageRes {
+    int32 point = 1; //能量点数
+    int64 zhuanPanTime = 2; //下次增加能量点的时间戳,精确到秒
+    int64 serverTime = 3; //服务器当前时间,精确到秒
+    repeated ZhuanpanLevel1Message zhuanPans = 4;
+    int32 emptyCoin = 5; //没钱时多少钱可以摇一次转盘
+    bool watchLevelUp = 6; //是否观看过升级转盘动画
+    int32 maxPoint = 7; // 最大能量点数
+
+    int32 currentTimes = 8; // 这轮奖励的倍数。
+}
+
+//摇转盘
+message ZhuangPanLevel1Req{
+    bool userCoin = 1; //是否使用金币摇转盘，只有没有能量点才能用金币摇转盘。
+}
+
+message ZhuangPanLevel1Res{
+    bool userCoin = 1;
+    ZhuanpanLevel1Message zhuanPan = 2; //获取到的基础奖励数据
+    int32 leftPoint = 3; //剩余能量点数
+    int64 leftCoin = 4; //摇完转盘后剩下的金币
+    int32 currentTimes = 5; //当前奖励是几倍的奖励，默认是1倍，有可能是3倍。
+
+    int32 nextTimes = 6; // 下次奖励的倍数。
+    int64 leftCrystalCoin = 7;//剩下的水晶币
+
+    int32 videoMuti = 8; //胜利者观看视频增加的倍数，该值除以100表示真正的倍数。0表示不用翻倍
+    string videoId = 9; //领取视频奖励的id
+
+    int32 code = 100; // 0表示成功， 1表示能量点不足，2表示拥有能量点了，不能使用金币 3表示金币数额不足
+}
+// 通知游戏当前升级动画已经播放
+message ZhuangPanLevel1UpTipReq{
+
+}
+
+message ZhuangPanLevel1UpTipRes{
+    int32 code = 100; // 0表示成功
+}
+
+
+
+//获取拥有的皮肤数据
+message GetAllSkin1Req{
+
+}
+
+message GetAllSkin1Res{
+    UserSkin1Message skin = 1;
+    string uid = 2;
+    int32 code = 100;
+}
+//获取皮肤的配置数据
+message SkinSetting1Msg{
+    int32 type = 1; //皮肤的类型，0表示棋子，1表示骰子，2表示花纹
+    int32 id = 2; //皮肤的id ，
+    int32 defSkin = 3; //是否默认皮肤，0表示不是，1表示是
+    int32 minLevel = 4; //最小等级，0表示没有限制
+    int32 minScene = 5; //最小的场次，0表示场次没有限制，minScene，minLevel其中必有一个为0
+    int64 skinCoin = 6; //皮肤购买价格
+    int32 order = 7; //排序字段，数字小的排在前面
+    int32 quality = 8; //皮肤的品质
+}
+
+//获取皮肤设置
+message GetSkinSetting1Req{
+
+}
+
+message GetSkinSetting1Res{
+    repeated SkinSetting1Msg skins = 1;
+}
+
+//购买皮肤
+message BuySkin1Req{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+}
+
+message BuySkin1Res{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+    int64 crystalCoin = 3; //剩下的水晶币
+
+    int32 code = 100; //0表示购买成功，1表示皮肤币不足，2表示重复购买，3表示未到达购买条件
+}
+//装扮皮肤
+message DecorateSkin1Req{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+}
+
+message DecorateSkin1Res{
+    int32 type = 1; //皮肤的类型
+    int32 id = 2; //皮肤的id
+
+    int32 code = 100; //0表示成功 ，1表示还未拥有
+}
+
+//大厅中场次升级下发该协议。
+message SceneChange1Res{
+    int32 sceneId = 15; //新的场次
+}
+
+//播放场次解锁动画
+message PlaySceneAnimation1Req{
+
+}
+
+message PlaySceneAnimation1Res{
+
+    int32 code = 100; //0表示成功
+}
+//红点类型
+enum RedPointType{
+    SKINLEVELUP = 0; //
+}
+
+message RedPoint{
+    RedPointType type = 1;
+    bool value = 2; //是否有红点，false没有，true有
+}
+//红点消息请求
+message RedPointGetReq{
+
+}
+
+message RedPointGetRes{
+    repeated RedPoint redPoints = 1;
+    int32 code = 100; //
+}
+//设置红点数据
+message RedPointSetReq{
+    repeated RedPointType types = 1;
+}
+
+message RedPointSetRes{
+    repeated RedPointType types = 1;
+    int32 code = 100;
+}
+
+// 玩家钱少时能够领钱
+message GetCoinWhenNoMoneyReq{
+
+}
+
+message GetCoinWhenNoMoneyRes{
+    int64 coin = 1; // 新的金钱数量
+    int32 code = 100;
+}
+
+
+message GetVedioAwardReq{
+    string videoId = 1;
+    bool watch = 2; //是否要观看视频
+}
+
+message GetVedioAwardRes{
+    string videoId = 1;
+    bool watch = 4; //是否要观看视频
+    repeated RewardItem award = 2; //奖励的道具增加
+    repeated RewardItem cur = 3; //道具新的值
+    int32 code = 15; // 1表示videoId错误
+}
+
+//准备观看场次视频
+message GetSceneVideoReq{
+
+}
+
+message GetSceneVideoRes{
+    string videoId = 1;
+    int64 num = 2; //观看视频
+    int32 code = 15; //1表示本日观看视频次数已满
+}
+
+
+message PushMsgReq{
+
+}
+
+message PushMsgRes{
+
+}
+
+//获取app金币数据，包括一些配置数据
+message GetAppCoinReq{
+
+}
+
+message GetAppCoinRes{
+    int64 appCoin = 1; //玩家拥有的app金币
+    int32 maxExchangeCount = 2; //本日剩余最大兑换次数
+
+    int32 rate = 3; //汇率， 1个平台币可以兑换多少ludo币
+    int32 levelExternCoin = 4; //等级额外奖励
+    int64 baseCoin = 5; //一次兑换多少app金币。
+
+    int32 code = 15;
+}
+
+message ExchangeAppCoinReq{
+    int32 num = 1; //兑换次数
+}
+message ExchangeAppCoinRes{
+    int32 num = 1; //兑换次数
+    int64 newCoin = 2; //兑换后新的ludo币数量
+    int64 addCoin = 3; //兑换了多少ludo币。
+
+    int32 code = 15; // 1表示兑换次数限制 , 2 余额不足无法兑换
+
+}
+
+//begin竞赛相关的协议
+
+//获取竞赛相关的数据
+message RaceGetReq{
+
+}
+
+message RaceGetRes{
+    int32 leftFreeTicket = 1; // 玩家剩余的免费门票
+    int64 ticketRefreshTime = 2; //下次门票刷新时间，精确到秒，
+    int32 leftBuyTicket = 8; // 玩家剩余的永久门票
+
+    int32 rateStatus = 3; // 竞赛的状态，0表示未开始，1表示比赛中
+
+    int32 winCount = 4; //胜利了几局了，从0开始
+    int32 bestWinCount = 9; //最大获得了多少连胜
+    int32 leftShareCount = 5; //还可以进行多少次分享
+    string shareId = 10; //分享使用的id
+    int64 ticketCoin = 13; //门票售价
+
+//    repeated int32  awardWinCount = 6; //可以领取奖励的胜利次数
+//    int32 awardReceiveWinCount = 7; // 已经领取到那个胜利次数的奖励，奖励必须从低到高一个一个领取
+
+
+    int32 code = 15; //
+    bool playRaceFlag = 16;
+    int64 hagoCoin=17;
+}
+
+message RaceAwardMessage{
+    int32 winCount = 1; //连胜次数
+    RewardItem items = 2; //奖励内容
+}
+//开始比赛并且发起匹配
+message RaceStartAndMatchReq{
+
+}
+
+message RaceStartAndMatchRes{
+    int32 leftTicket = 1; // 玩家剩余的门票
+
+    int32 code = 15; // 1表示门票不足，2表示比赛中了
+}
+//发起匹配，继续比赛
+message RaceMatchReq{
+
+}
+
+message RaceMatchRes{
+
+    int32 code = 15; // 1表示状态不对，不在比赛中
+}
+
+message RaceMatchSuccessRes{
+    int32 code = 1;//场次 0成功
+    string roomId =2;//
+    int64 timestamp=3;
+    string opt = 4;
+    string sign = 5;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    string problemUid =6; //出现问题的匹配成员
+    int32 gameType = 7;//2
+    int32 otherWinCount = 8; //另外一个玩家的连胜次数
+    string sn = 15;
+}
+//领取连胜奖励
+//message RaceReceiveAwardBoxReq{
+//    int32 winCount = 1;
+//}
+//
+//message RaceReceiveAwardBoxRes{
+//    int32 winCount = 1;
+//    repeated RewardItem items = 2; //奖励的内容
+//
+//
+//    int32 code = 15; //
+//}
+//分享获得门票
+message RaceShareAwaidTicketReq{
+    string shareId = 1; //分享获得门票的id
+}
+
+message RaceShareAwaidTicketRes{
+    int32 leftFreeTicket = 1; // 玩家剩余的免费门票
+    int64 ticketRefreshTime = 2; //下次门票刷新时间，精确到秒，
+    int32 leftBuyTicket = 8; // 玩家剩余的永久门票
+
+    int32 rateStatus = 3; // 竞赛的状态，0表示未开始，1表示比赛中
+
+    int32 winCount = 4; //胜利了几局了，从0开始
+    int32 bestWinCount = 9; //最大获得了多少连胜
+    int32 leftShareCount = 5; //还可以进行多少次分享
+    string newShareId = 10; //新的分享id
+    string shareId = 11; //本次的分享id
+
+
+    int32 code = 15; //1 分享次数限制
+
+}
+//获取免费门票
+message RaceGetFreeTicketReq{
+
+}
+message RaceGetFreeTicketRes{
+    int32 leftFreeTicket = 1; // 玩家剩余的免费门票
+    int64 ticketRefreshTime = 2; //下次门票刷新时间，精确到秒，
+
+    int32 code = 15; //
+}
+
+//分享复活
+message RaceShareRebornReq{
+    string shareId = 1; //分享id
+}
+
+message RaceShareRebornRes{
+
+
+    string shareId = 1; //本次的分享id
+    int32 code = 15; //1 分享次数限制
+
+}
+//购买赛事门票
+message RaceBuyTicketReq{
+    int32 num = 1;
+}
+
+message RaceBuyTicketRes{
+    int32 num = 1;
+    int32 ticketNum = 2; //现在拥有的购买门票数量
+
+    int32 code = 15; //1表示金币不足
+}
+//end竞赛相关的协议
+//获取ai的uid列表
+message AiGetListReq{
+
+}
+
+message AiGetListRes{
+    int64 max = 1;// uid 最大
+    int64 min = 2; //uid 最小
+}
+
+message GetGlobalExchangeReq{
+    int32 limit=1;
+    int32 offset=2;
+    bool is_ludo_challenge_open=3;
+    string x_lang=4;
+}
+
+message GetGlobalExchangeRes{
+    int32 resCode =1;
+    string reMsg =2;
+    repeated ExchangeLogPB exchangeLogPB=3;
+
+}
+
+message ExchangeLogPB{
+    string nick=1;
+    string head_url=2;
+    int32 cnt=3;
+    int32 item_id=4;
+    int32 type=5;
+    string name=6;
+    int32 mall_type=7;
+    string txt=8;
+}
+
+////公告消息通知
+//message BoardMsgRes{
+//    string msg = 1; //公告的消息
+//
+//    int32 type = 2; //跳转的类型，0表示不用跳转， 1表示跳转到六人场
+//
+//}
+////公告消息读取通知
+//message BoardMsgReadReq{
+//
+//}
+//
+//message BoardMsgReadRes{
+//
+//    int32 code = 15;
+//
+//}
+
+
+
+
+//任务宝箱进度数据
+message TaskBoxReq{
+
+}
+
+message TaskBoxRes{
+    int32 curPoint = 1; //当前到达的进度
+    repeated int32 recBoxes = 2; //已经领取的宝箱id
+    repeated TaskBox boxes = 3; //宝箱列表
+
+}
+
+message TaskBox{
+    int32 box = 1; //宝箱id
+    repeated RewardItem item = 2; //宝箱的奖励内容
+    int32 point = 3; //宝箱需要多少能量才能领取
+}
+//领取宝箱
+message TaskBoxReceiveReq{
+    int32 box = 1; // 宝箱id
+}
+
+message TaskBoxReceiveRes{
+    int32 box = 1; // 宝箱id
+    repeated RewardItem item = 2; //宝箱的奖励内容
+
+    int32 code = 15; // 1 进度不够无法领取  2 已经领取过了
+}
+
+message SevenDayConfig{ //参考配置表说明
+    int32 id = 1; //天数
+    NewReward reward = 2;
+}
+
+message NewReward{
+    int32 itemId = 1;
+    /**
+    0 货币
+    1 皮肤
+     */
+    int32 type = 2;
+    /**
+    int ITEM_TYPE_COIN = 0; //金币数值
+    int ITEM_TYPE_CRYSTAL = 1;//皮肤币数值
+    int ITEM_TYPE_HAGO_COIN = 2;//hago金币
+    int ITEM_TYPE_DIAMOND = 3;//钻石数值
+    int ITEM_TYPE_GHOST_TICKET = 4;//鬼节模式钥匙
+
+    int SKIN_TYPE_RICE = 1; // 骰子类型皮肤
+    int SKIN_TYPE_CHESS = 0; // 棋子类型皮肤
+    int SKIN_TYPE_HUAWEN = 2; // 花纹类型皮肤
+     */
+    int32 itemType = 3;
+    int32 itemNum = 4;
+}
+
+message SevenDayInfo{
+    SevenDayConfig sevenDayInfo = 1;
+    bool reward = 2;
+}
+
+message SevenDayInfoReq{
+
+}
+
+message SevenDayInfoRes{
+    repeated SevenDayInfo info = 1;
+    int64 freshTime = 4; // 下一天刷新的时间
+    int32 lastDay = 5; //最新可以签到的一天
+}
+
+message SelectRewardReq{
+    int32 id = 1;
+}
+
+
+message SelectRewardRes{
+    int32 id = 1;
+    int32 code = 2; // 0 正常签到，1已签到, 2非法签到,3配置错误
+    NewReward reward = 3;
+    bool change = 4; //是否转换
+}
+

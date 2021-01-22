@@ -1,0 +1,212 @@
+syntax = "proto3";
+
+package pb;
+
+// 客户端发送给服务端的数据流
+message streamReq {
+    int64 connectId = 1;    //连接的id
+    int64 seq = 2;          //客户端消息序列
+    string msgName = 3;     //消息名
+    bytes msgData = 4;      //消息数据
+}
+
+//服务端发送给客户端的数据流
+message streamRes {
+    int64 connectId = 1;    //连接的id
+    int64 seq = 2;          //客户端消息序列
+    string msgName = 3;     //消息名
+    bytes msgData = 4;      //消息数据
+}
+
+message LoginRes {
+    int32 code = 1; //code = 10000 出现错误，版本有问题，需要退出重连。
+    string msg = 2; //错误消息。
+    PostData postData = 3;
+
+    int64 coin = 4;         // 金币
+
+    int32 gameMode = 8;         // 游戏模式： 0:大厅  1 ： 游戏中 ,4 竞赛模式中,5 2v2游戏模式中 ， 6 2v2组队模式 , 7 六角模式 ，8 捉鬼组队 9 抓鬼游戏模式
+
+    int64 serverTime = 9; // 服务器时间精确到毫秒
+
+    int32 skinId = 10; //玩家当前选择的皮肤。
+    //带皮肤碎片的版本不再用该字段了
+    ModuleTask task = 7;        // 任务
+
+    LevelMessage levelMessage = 11; //用户当前等级数据
+
+    int64 resultCount = 12; //总共场数
+    int64 successCount = 13;//胜利场数
+    int64 failCount = 14;//失败场数
+
+    int32 sceneId = 15; //玩家当前的场次
+    int32 playedSceneAnimation = 16; //1表示播放过动画，0表示未播放
+
+    int32 minGhostLevel = 17; //解锁鬼模式的最小等级
+}
+//等级数据
+message LevelMessage{
+    int32 level = 1; //当前的等级
+    int64 exp = 2; //当前的经验
+    int64 maxExp = 3; //达到多少经验就会升级
+}
+message PostData {
+    string channel = 1;
+    string gameid = 2;
+    string roomid = 3;
+    Player player = 4;
+}
+
+message Player {
+    string uid = 1;
+    string name = 2;
+    string avatarurl = 3;
+    string teamid = 4;
+    string opt = 5;
+	int32 sex = 6;
+    bool ready =7;//是否准备好了
+}
+
+message UserLoginRes {
+    int32 code = 1;
+    string msg = 2;
+    repeated Player data = 3;
+}
+
+message LoadProgressReq {
+    int32 progress = 1;
+}
+message LoadProgressRes {
+    int32 code = 1;
+    string msg = 2;
+    repeated LoadProgressResData data = 3;
+}
+message LoadProgressResData {
+    string uid = 1;
+    int32 progress = 2;
+}
+
+message ReadyReq {
+    bool ready = 1;
+}
+message ReadyRes {
+    int32 code = 1;
+    string msg = 2;
+    ReadyResData data = 3;
+}
+message ReadyResData {
+    repeated string uids = 1;
+}
+
+message UnvarnishedReq {
+    bytes data = 1;
+}
+message UnvarnishedRes {
+    int32 code = 1;
+    string msg = 2;
+    bytes data = 3;
+}
+
+message HeartReq {
+    int64 reqTimestamp = 1; // 客户端时间戳
+}
+message HeartRes {
+    int64 timestamp = 1;    // 服务器时间戳
+    int64 reqTimestamp = 2; // 客户端时间戳
+}
+
+message GiveUpReq {
+
+}
+message GiveUpRes {
+    int32 code = 1;
+    string msg = 2;
+    GiveUpResData data = 3;
+
+}
+
+message ForceExitReq {
+
+}
+message ForceExitRes {
+    int32 code = 1;
+    string msg = 2;
+    GiveUpResData data = 3;
+}
+
+message GiveUpResData {
+    string uid = 1; // 当前玩家的uid
+    repeated GiveUpUserMessage uids = 2; // 游戏的玩家基础信息
+    int32 grade = 3;//初中高 ，1表示初级， 2表示中级， 3表示高级
+    int32 gameType = 4;//2人 和4人 ， 2表示2人场， 4表示四人场
+    int64 leftCoin = 5; //当前玩家的金钱余额
+
+    UserData userData = 6; //玩家信息
+
+}
+message GiveUpUserMessage{
+    string uid = 1; //玩家uid
+    int32 color = 2; // 玩家棋子颜色
+    int32 skinId = 3; // 皮肤
+    bool escape = 4; //是否逃跑了
+}
+
+message ModuleTask {
+    repeated TaskData taskList = 1;
+}
+
+message TaskData {
+    int32 id = 1;                       // 任务ID
+    int32 type = 2;                     // 任务类型
+    int64 goalValue = 3;                // 目标值
+    int64 curValue = 4;                 // 当前完成值
+    bool getRewarded = 5;               // 是否已经领取奖励
+    int32 refreshType = 6;              // 完成后刷新类型
+    repeated RewardItem itemList = 7;   // 奖励列表
+    int32 iconId = 8;                   // 图标ID
+    int32 describeId = 9;                   // 描述ID
+    int64 refreshTime = 10;              // 完成后的刷新时间,如果不刷新 为-1
+    int32 order = 11;  //排序字段
+
+    int32 boxPoint = 12;  // 完成任务对宝箱进度的贡献
+}
+
+message RewardItem {
+    int32 itemId = 1;       // 奖励ID ： 0：金币   1 ：水晶 ， 2 hago金币 3 hago钻石  4 鬼节钥匙
+    int64 itemNum = 2;      // 数量
+}
+
+
+message UserData{
+    string uid = 1; //玩家uid
+    int64 coin = 2; //玩家当前金币
+    int64 leftSecond = 3; // 签到剩下时间
+    int32 skinId = 4; //玩家使用的皮肤
+    bool online = 5; // 玩家是否在线
+    int32 level = 6; // 玩家等级
+
+    repeated Skins1Msg decorated = 7; //当前装扮的皮肤列表
+
+    int32 winCount = 8; //当前的连胜记录
+
+    int32 eatCount = 9; //击杀数
+    int32 round = 10; //游戏回合数
+    int32 bufferTime = 11; //触发buffer的次数
+
+    int32 color = 12;
+
+}
+
+
+//表示一个类型下面可能有多个皮肤
+message Skins1Msg{
+    int32 type = 1; // 皮肤的类型，0表示棋子，1表示骰子，2表示花纹
+    repeated int32 ids = 2; //皮肤的id列表。
+}
+
+//用户的皮肤数据
+message UserSkin1Message{
+    int64 crystalCoin = 1; //用户拥有的水晶币数量
+    repeated Skins1Msg decorated = 2; //当前装扮的皮肤列表
+    repeated Skins1Msg owners = 3; // 拥有的皮肤列表
+}

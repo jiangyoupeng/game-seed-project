@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package pb;
+
+import "base.proto";
+import "game.proto";
+
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+option java_package = "com.yy.wolfkill.h5game.ludoking.pb";
+option java_multiple_files = true;
+
+message MatchSixModeReq{
+    int32 grade = 1;//初中高 ，1表示初级， 2表示中级， 3表示高级
+
+}
+
+message MatchSixModeRes{
+    int32 grade = 1;  //初中高 ，1表示初级， 2表示中级， 3表示高级
+    int32 code = 15; // 1 有玩家未准备  2 有玩家金钱不足（高级场出现）
+
+}
+
+message MatchSixModeSuccessRes{
+    int32 code = 1;//场次 0成功
+    string roomId =2;//
+    int64 timestamp=3;
+    string opt = 4;
+    string sign = 5;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 grade = 7;//初中高 ，1表示初级， 2表示中级， 3表示高级
+
+    string sn = 15;
+}
+
+
+// readyGoRes协议
+message SixModeReadyGoRes {
+    int32 code = 1;
+    string msg = 2;
+    SixModeReadyGoResData data = 3;
+}
+message SixModeReadyGoResData {
+    string first_uid = 1;  //下一个用户id
+    SixModeChessBoard chessboard = 2 ; //棋盘
+    int64  start_time = 3 ; // 时间戳，精确到毫秒
+    int64 roundEndTime = 4; //回合时间
+    repeated UserData userDatas = 5; //玩家的基础数据
+    int64 loseCoin = 6; // 输家的金币
+    int64 winCoin = 7; // 赢家的金币
+    int32 gameMode = 11;         // 游戏模式： 0:大厅  1 ： 游戏中 ,4 竞赛模式
+}
+
+// 断线重连协议
+message SixModeReLoginRes {
+    int32 code = 1;
+    string msg = 2;
+    SixModeReLoginResData data = 3;
+}
+message SixModeReLoginResData {
+    string stage = 1;    // 游戏当前阶段,load,ready,start,finish
+
+    string curuid = 2 ;  //当前玩家id
+
+    int32 dicenum = 3 ; // 骰子数
+
+    int32 gameMode = 11;         // 游戏模式： 0:大厅  1 ： 游戏中 ,4 竞赛模式
+
+    SixModeChessBoard chessboard = 6 ; //棋盘
+
+    int64 roundEndTime = 7 ; // 回合剩下时间，单位秒
+
+    DiceNumResType dicetype = 8; //骰子状态，重连时可能发现骰子是666状态，不能进行下一步
+
+    int64 coin = 10;         // 金币
+
+    repeated UserData userDatas = 13; //玩家的基础数据
+
+    int64 loseCoin = 14; // 输家的金币
+    int64 winCoin = 15; // 赢家的金币
+
+}
+
+message SixModeChessBoard {
+    repeated SixModeAirPortPlane airport_planes = 1;
+    repeated SixModePlane plane = 2; //返回已经起飞的棋子列表
+}
+
+message SixModeAirPortPlane{
+    int32 color = 1; //飞机场的编号，从0到5
+    int32 plane = 2; // 飞机场停留的飞机列表，飞机编号取0到1
+}
+//棋子
+message SixModePlane{
+    int32 x = 1; //飞机停留位置x
+    int32 color = 2; //属于那个阵营的玩家
+    int32 plane = 3; //飞机编号
+}
+
+
+//获取一个随机的色子点数
+message SixModeDiceNumReq{
+    int32 num = 1; //测试时可以传递num,后台直接使用该字段构造此回合的骰子数
+}
+//色子数返回结果
+message SixModeDiceNumRes{
+    int32 code = 1;
+    string msg = 2;
+    SixModeDiceNumData data = 3;
+}
+
+message SixModeDiceNumData{
+    int32 num = 1;
+    int64 roundEndTime = 2; //下一个回合的结束时间戳
+    DiceNumResType type = 3 ; //骰子事件类型
+    string uid = 4; //谁触发了摇骰子的操作
+
+
+}
+
+//enum SixModeDiceNumResType{
+//    COMMON = 0; //普通骰子事件
+//    FAIL666 = 1; //发生了连续三个6事件，要阻止继续当前回合进行
+//}
+
+message SixModeMoveReq{
+    int32 color = 1;
+    int32 plane = 2;
+
+    MoveType type = 3;
+    int32 diceNum = 4 ; //移动的格子数，从1到6
+}
+
+
+
+//enum MoveType{
+//    NORMAL = 0; //普通移动
+//    TAKEOFF = 1; //起飞
+//    NOMOVE = 2; //没有移动
+//
+//}
+
+//出事的飞机
+message SixModeCrashPlane {
+    int32 color = 1; //玩家的编号，从0到3
+    int32 plane = 2; //飞机的编号也是0到3
+    int32 x = 3; //飞机出事前的坐标
+
+}
+
+
+message SixModeMoveRes{
+    int32 code = 1;
+    string msg = 2;
+    SixModeMoveResData data= 3;
+}
+
+message SixModeMoveResData{
+    string uid = 1;
+    SixModePlane plane = 2; //普通移动时的飞机
+    SixModeAirPortPlane airport_plane = 3; //起飞时的飞机
+    MoveType type = 4;
+
+    repeated SixModeCrashPlane crashPlanes = 5;
+    string next_uid = 6;
+
+    int64 roundEndTime = 7; //下一个回合的结束时间戳
+
+    int32 diceNum = 8 ; //骰子数
+
+}

@@ -1,0 +1,300 @@
+syntax = "proto3";
+
+import "base.proto";
+import "game.proto";
+package pb;
+
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+option java_package = "com.yy.wolfkill.h5game.ludoking.pb";
+option java_multiple_files = true;
+
+//捉鬼配置
+//发起匹配
+//进入组队界面是如果玩家金币不足最低场次，主动补发（等到房主点击匹配按钮后再补发效果不好），保证低级场次不会有余额不足的情况
+message MatchGhostReq{
+    int32 grade = 1;//初中高 ，1表示初级， 2表示中级， 3表示高级
+
+}
+
+message MatchGhostRes{
+    int32 grade = 1;  //初中高 ，1表示初级， 2表示中级， 3表示高级
+    int32 code = 15; // 1 有玩家未准备  2 有玩家金钱不足（高级场出现）3 等级不够
+}
+
+message MatchGhostSuccessRes{
+    int32 code = 1;//场次 0成功
+    string roomId =2;//
+    int64 timestamp=3;
+    string opt = 4;
+    string sign = 5;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 grade = 7;//初中高 ，1表示初级， 2表示中级， 3表示高级
+
+    repeated string team1 = 8; // 其中一队的玩家uid，匹配界面展示用数据
+    repeated string team2 = 9;// 另外一队的玩家uid，匹配界面展示用数据
+    string sn = 15;
+}
+
+//进入捉鬼匹配界面
+message MatchGhostEnterRoomReq{
+    string roomId = 1; //空表示进入新的组队页面，不空表示接受邀请后要进入的界面
+}
+
+//收到该协议，发起新的连接
+//除了前端主动触发，捉鬼游戏结束后也会下推该协议，被邀请用户如果进来时房间人数已满也会下发该协议
+message MatchGhostEnterRoomRes{
+    string roomId =1;//
+    int64 timestamp=2;
+    string opt = 3;
+    string sign =4;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 code = 15;//0成功 1 房间不存在 2 等级不够
+
+}
+
+//上报玩家状态
+message MatchGhostStageChangeReq{
+    int32 state = 1; //0准备（玩家进入游戏中自动切换为准备状态），1 未准备
+}
+
+message MatchGhostUserState{
+    string uid = 1; //玩家uid
+    int32 state = 2; // 0准备状态， 1未准备状态
+    int64 coin = 3; //玩家的金币
+    int32 ticket = 4; //玩家的普通门票
+    int32 freeTicket = 5; //玩家免费门票
+}
+//上报玩家状态时会触发， 新玩家进入也会下发（第一个玩家进入也触发）， 玩家退出也触发
+message MatchGhostStageChangeRes{
+    repeated MatchGhostUserState users = 1; //玩家状态，第一个玩家就是房主
+    int32 code = 15;
+}
+
+//退出捉鬼组队界面
+message MatchGhostExitRoomReq{
+
+}
+
+//收到该协议，发起新的连接
+message MatchGhostExitRoomRes{
+    string roomId =1;//
+    int64 timestamp = 2;
+    string opt = 3;
+    string sign = 4;// sign = roomid + timestamp + opt;//原来的checkSign要改变
+    int32 code = 15;//0成功 1 房间不存在
+
+}
+
+// 捉鬼战斗房间协议
+
+// readyGoRes协议
+message GhostReadyGoRes {
+    int32 code = 1;
+    string msg = 2;
+    GhostReadyGoResData data = 3;
+}
+message GhostReadyGoResData {
+    string first_uid = 1;  //下一个用户id
+    GhostChessBoard chessboard = 2 ; //棋盘
+    int64  start_time = 3 ; // 时间戳，精确到毫秒
+    int64 roundEndTime = 4; //回合时间
+    repeated UserData userDatas = 5; //玩家的基础数据 ， uid=1的就是鬼
+    int64 loseCoin = 6; // 输家的金币
+    int64 winCoin = 7; // 赢家的金币
+    int32 gameMode = 11;         // 9 捉鬼模式中
+
+    int32 aiMode = 8; //0 ai处于小鬼模式 1 ai处于死神模式
+    double point = 9; //当前ai的能量点
+    double deadPoint = 10; //变为死神需要多少能量点
+    int32 deadCount = 12; //已经变成死神多少次了
+
+    int32 deadModeLeftRound = 13; // 死神模式还有多少回合
+    int64 deadModeMaxRound = 14; // 死神模式一共持续多少回合
+
+    GhostGameInfo info = 18; //玩家配置
+
+}
+
+// 断线重连协议
+message GhostReLoginRes {
+    int32 code = 1;
+    string msg = 2;
+    GhostReLoginResData data = 3;
+}
+message GhostReLoginResData {
+    string stage = 1;    // 游戏当前阶段,load,ready,start,finish
+
+    string curuid = 2 ;  //当前玩家id
+
+    int32 dicenum = 3 ; // 骰子数
+
+    int32 gameMode = 4;         // 游戏模式： 0:大厅  1 ： 游戏中 ,4 竞赛模式 9 捉鬼战斗模式
+
+    int64 coin = 5;         // 金币
+
+    GhostChessBoard chessboard = 6 ; //棋盘
+
+    int64 roundEndTime = 7 ; // 回合剩下时间，单位秒
+
+    DiceNumResType dicetype = 8; //骰子状态，重连时可能发现骰子是666状态，不能进行下一步
+
+
+
+    repeated UserData userDatas = 9; //玩家的基础数据
+
+    int64 loseCoin = 10; // 输家的金币
+    int64 winCoin = 11; // 赢家的金币
+
+    int32 aiMode = 12; //0 ai处于小鬼模式 1 ai处于死神模式
+    double point = 13; //当前ai的能量点
+    double deadPoint = 14; //变为死神需要多少能量点
+    int32 deadCount = 15; //已经变成死神多少次了
+    int32 deadModeLeftRound = 16; // 死神模式还有多少回合
+    int64 deadModeMaxRound = 17; // 死神模式一共持续多少回合
+
+    GhostGameInfo info = 18; //玩家配置
+
+}
+
+message GhostChessBoard {
+    repeated GhostAirPortPlane airport_planes = 1;
+    repeated GhostPlane plane = 2; //返回已经起飞的棋子列表
+}
+
+message GhostAirPortPlane{
+    int32 color = 1; //飞机场的编号，从0到3
+    int32 plane = 2; // 飞机场停留的飞机列表，飞机编号取0到3
+    int32 rebornLeftRound = 3; //离复活有多少回合。 鬼的棋子才有这个字段，普通玩家值为0
+}
+//棋子
+message GhostPlane{
+    int32 x = 1; //飞机停留位置x
+    int32 y = 2; //飞机停留位置x
+    int32 color = 3; //属于那个阵营的玩家
+    int32 plane = 4; //飞机编号
+    int32 life = 5; // 棋子的生命值，ai棋子初始值为2
+}
+
+
+//获取一个随机的色子点数
+message GhostDiceNumReq{
+    int32 num = 1; //测试时可以传递num,后台直接使用该字段构造此回合的骰子数
+}
+//色子数返回结果
+message GhostDiceNumRes{
+    int32 code = 1;
+    string msg = 2;
+    GhostDiceNumData data = 3;
+}
+
+message GhostDiceNumData{
+    int32 num = 1;
+    int64 roundEndTime = 2; //下一个回合的结束时间戳
+    DiceNumResType type = 3 ; //骰子事件类型
+    string uid = 4; //谁触发了摇骰子的操作
+
+
+}
+
+//enum GhostDiceNumResType{
+//    COMMON = 0; //普通骰子事件
+//    FAIL666 = 1; //发生了连续三个6事件，要阻止继续当前回合进行
+//}
+
+message GhostMoveReq{
+    int32 color = 1;
+    int32 plane = 2;
+
+    MoveType type = 3;
+    int32 diceNum = 4 ; //移动的格子数，从1到6
+}
+
+
+
+//enum MoveType{
+//    NORMAL = 0; //普通移动
+//    TAKEOFF = 1; //起飞
+//    NOMOVE = 2; //没有移动
+//
+//}
+
+//出事的飞机
+message GhostCrashPlane {
+    int32 color = 1; //玩家的编号，从0到3
+    int32 plane = 2; //飞机的编号也是0到3
+    int32 x = 3; //飞机出事前的坐标
+    int32 y = 4; //飞机坐标
+    int32 life = 5; //被攻击的飞机剩下的生命值，为0才会出现坠机或者休眠状态
+
+}
+
+
+message GhostMoveRes{
+    int32 code = 1;
+    string msg = 2;
+    GhostMoveResData data = 3;
+}
+
+message GhostMoveResData{
+    string uid = 1;
+    GhostPlane plane = 2; //普通移动时的飞机
+    GhostAirPortPlane airport_plane = 3; //起飞时的飞机
+
+    MoveType type = 4;
+
+    repeated GhostCrashPlane crashPlanes = 5;
+    string next_uid = 6;
+
+    int64 roundEndTime = 7; //下一个回合的结束时间戳
+
+    int32 diceNum = 8 ; //骰子数
+
+    //ai新的状态。
+    int32 aiMode = 12; //0 ai处于小鬼模式 1 ai处于死神模式
+    double point = 13; //当前ai的能量点
+    double deadPoint = 14; //变为死神需要多少能量点
+    int32 deadCount = 15; //已经变成死神多少次了
+    int32 deadModeLeftRound = 16; // 死神模式还有多少回合
+    int64 deadModeMaxRound = 17; // 死神模式一共持续多少回合
+
+    repeated GhostPlane rebornPlanes = 9; //复活的棋子
+
+    GhostPlane planeNew = 18; //新的位置
+
+}
+
+
+//游戏外相关功能开发
+
+//获取捉鬼配置信息
+message GhostSettingReq{
+
+}
+
+message GhostSettingRes{
+
+    int32 ticket = 1; //还剩多少门票，没有包含免费门票
+    int64 nextTimeToRefreshTicket = 2; //下一次可以获取免费门票的时间
+    int32 freeTicketNum = 3; //剩余免费门票数量
+
+
+    repeated GhostInfo sets = 5; // 场次配置
+
+}
+//难度配置数据
+message GhostInfo{
+    int32 coinChange = 1; //没有门票时需要多少金币能够入场
+    int32 hard = 2; // 难度配置，1 低 2 中
+    repeated RewardItem awards = 3; //奖励
+}
+//游戏内配置数据
+message GhostGameInfo{
+    int32 ghostWinScore = 1; //鬼胜利的分数
+    int32 userWinScore = 2; //普通玩家胜利分数
+
+    int32 ghostLife = 3; //鬼血量上限
+
+    int32 infoFinalPosScore = 4; //进入终点后，玩家得到多少分
+}
+

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package pb;
+
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+option java_package = "com.yy.wolfkill.h5game.ludoking.pb";
+option java_multiple_files = true;
+
+//获取一个频道
+message GetChannelReq{
+    int32 type = 1; // 11 语音房  14 秀场
+}
+
+message GetChannelRes{
+    int32 type = 1; // // 11 语音房  14 秀场
+    string channelId = 2; //频道id,channelId为空表示没有对应的频道在线
+    int32 code = 15; //
+}
