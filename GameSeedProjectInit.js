@@ -4,7 +4,11 @@ const fs = require('fs')
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.judgeIsNeedInit = exports.judgeIsNeedInit = void 0;
 
-let subModelePath = [path.join(__dirname ,'nodeTool'),path.join(__dirname , 'Metaprogramming-ts'),path.join(__dirname , 'creatorGameLib')]
+let subModelePath = [
+    path.join(__dirname ,'nodeTool'),
+    path.join(__dirname , 'Metaprogramming-ts'),
+    path.join(__dirname , 'creatorGameLib')
+]
 // 检查当前项目依赖子模块是否更新
 function initSeadProject() {
     // 监听开始游戏初始化
