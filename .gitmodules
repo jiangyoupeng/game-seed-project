@@ -1,0 +1,9 @@
+[submodule "nodeTool"]
+	path = nodeTool
+	url = https://github.com/jiangyoupeng/nodeTool
+[submodule "Metaprogramming-ts"]
+	path = Metaprogramming-ts
+	url = https://github.com/jiangyoupeng/Metaprogramming-ts
+[submodule "creatorGameLib"]
+	path = creatorGameLib
+	url = https://github.com/jiangyoupeng/creatorGameLib
