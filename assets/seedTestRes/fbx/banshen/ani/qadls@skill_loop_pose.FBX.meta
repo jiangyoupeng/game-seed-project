@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "e5b507ee-a0fc-48a1-aab6-a0dc90dd7f40",
+  "files": [],
+  "subMetas": {
+    "d16ba": {
+      "importer": "gltf-animation",
+      "uuid": "e5b507ee-a0fc-48a1-aab6-a0dc90dd7f40@d16ba",
+      "displayName": "",
+      "id": "d16ba",
+      "name": "skill_loop_pose.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 0.625
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f3273": {
+      "importer": "gltf-scene",
+      "uuid": "e5b507ee-a0fc-48a1-aab6-a0dc90dd7f40@f3273",
+      "displayName": "",
+      "id": "f3273",
+      "name": "qadls@skill_loop_pose.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.625,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "skill_loop_pose",
+            "from": 0,
+            "to": 0.625,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "e5b507ee-a0fc-48a1-aab6-a0dc90dd7f40@f3273",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "e5b507ee-a0fc-48a1-aab6-a0dc90dd7f40@f3273"
+      ]
+    }
+  }
+}

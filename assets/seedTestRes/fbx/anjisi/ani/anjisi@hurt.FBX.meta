@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "5c325e38-a2d6-41fe-a4d0-5efaf48c5579",
+  "files": [],
+  "subMetas": {
+    "a80c5": {
+      "importer": "gltf-animation",
+      "uuid": "5c325e38-a2d6-41fe-a4d0-5efaf48c5579@a80c5",
+      "displayName": "",
+      "id": "a80c5",
+      "name": "hurt.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 0.5833333134651184
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7cb29": {
+      "importer": "gltf-scene",
+      "uuid": "5c325e38-a2d6-41fe-a4d0-5efaf48c5579@7cb29",
+      "displayName": "",
+      "id": "7cb29",
+      "name": "anjisi@hurt.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.5833333134651184,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "hurt",
+            "from": 0,
+            "to": 0.5833333134651184,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "5c325e38-a2d6-41fe-a4d0-5efaf48c5579@7cb29",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "5c325e38-a2d6-41fe-a4d0-5efaf48c5579@7cb29"
+      ]
+    }
+  }
+}

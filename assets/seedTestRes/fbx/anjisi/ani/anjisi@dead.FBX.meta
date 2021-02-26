@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "4f837d74-760d-4567-9f57-2b2e8fa8e692",
+  "files": [],
+  "subMetas": {
+    "6018c": {
+      "importer": "gltf-animation",
+      "uuid": "4f837d74-760d-4567-9f57-2b2e8fa8e692@6018c",
+      "displayName": "",
+      "id": "6018c",
+      "name": "dead.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.9583333730697632
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "51cbb": {
+      "importer": "gltf-scene",
+      "uuid": "4f837d74-760d-4567-9f57-2b2e8fa8e692@51cbb",
+      "displayName": "",
+      "id": "51cbb",
+      "name": "anjisi@dead.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 1.9583333730697632,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "dead",
+            "from": 0,
+            "to": 1.9583333730697632,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "4f837d74-760d-4567-9f57-2b2e8fa8e692@51cbb",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "4f837d74-760d-4567-9f57-2b2e8fa8e692@51cbb"
+      ]
+    }
+  }
+}

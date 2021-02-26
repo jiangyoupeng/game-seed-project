@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "6b926034-58ae-46d9-a148-afb2ad22f809",
+  "files": [],
+  "subMetas": {
+    "2fbab": {
+      "importer": "gltf-animation",
+      "uuid": "6b926034-58ae-46d9-a148-afb2ad22f809@2fbab",
+      "displayName": "",
+      "id": "2fbab",
+      "name": "skill2.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 2.125
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a4f5e": {
+      "importer": "gltf-scene",
+      "uuid": "6b926034-58ae-46d9-a148-afb2ad22f809@a4f5e",
+      "displayName": "",
+      "id": "a4f5e",
+      "name": "qadls@skill2.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 2.125,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "skill2",
+            "from": 0,
+            "to": 2.125,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "6b926034-58ae-46d9-a148-afb2ad22f809@a4f5e",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "6b926034-58ae-46d9-a148-afb2ad22f809@a4f5e"
+      ]
+    }
+  }
+}

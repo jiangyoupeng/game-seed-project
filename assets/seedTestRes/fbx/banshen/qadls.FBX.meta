@@ -1,0 +1,164 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "21858f83-3cfb-46e9-bb33-3115409a85cf",
+  "files": [],
+  "subMetas": {
+    "b73e9": {
+      "importer": "gltf-mesh",
+      "uuid": "21858f83-3cfb-46e9-bb33-3115409a85cf@b73e9",
+      "displayName": "",
+      "id": "b73e9",
+      "name": "JTLboss.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "73b7f": {
+      "importer": "gltf-animation",
+      "uuid": "21858f83-3cfb-46e9-bb33-3115409a85cf@73b7f",
+      "displayName": "",
+      "id": "73b7f",
+      "name": "Take 001.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.625
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "21858f83-3cfb-46e9-bb33-3115409a85cf@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 59
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6e70c": {
+      "importer": "texture",
+      "uuid": "21858f83-3cfb-46e9-bb33-3115409a85cf@6e70c",
+      "displayName": "",
+      "id": "6e70c",
+      "name": "Map #1.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 1,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/seedTestRes/fbx/banshen/materials/QADLS.png"
+      },
+      "ver": "1.0.20",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "5c895": {
+      "importer": "gltf-material",
+      "uuid": "21858f83-3cfb-46e9-bb33-3115409a85cf@5c895",
+      "displayName": "",
+      "id": "5c895",
+      "name": "Material #2.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "cb5a2": {
+      "importer": "gltf-scene",
+      "uuid": "21858f83-3cfb-46e9-bb33-3115409a85cf@cb5a2",
+      "displayName": "",
+      "id": "cb5a2",
+      "name": "qadls.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "Map #1",
+        "uri": "db://assets/seedTestRes/fbx/banshen/materials/QADLS.png"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 1.625,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Take 001",
+            "from": 0,
+            "to": 1.625,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "21858f83-3cfb-46e9-bb33-3115409a85cf@cb5a2",
+    "assetFinder": {
+      "meshes": [
+        "21858f83-3cfb-46e9-bb33-3115409a85cf@b73e9"
+      ],
+      "skeletons": [
+        "21858f83-3cfb-46e9-bb33-3115409a85cf@438fe"
+      ],
+      "textures": [
+        "21858f83-3cfb-46e9-bb33-3115409a85cf@6e70c"
+      ],
+      "materials": [
+        "21858f83-3cfb-46e9-bb33-3115409a85cf@5c895"
+      ],
+      "scenes": [
+        "21858f83-3cfb-46e9-bb33-3115409a85cf@cb5a2"
+      ]
+    }
+  }
+}

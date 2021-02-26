@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "e5e90542-9f4f-46ff-ac63-7b4d36c7e15a",
+  "files": [],
+  "subMetas": {
+    "965ed": {
+      "importer": "gltf-animation",
+      "uuid": "e5e90542-9f4f-46ff-ac63-7b4d36c7e15a@965ed",
+      "displayName": "",
+      "id": "965ed",
+      "name": "skill1.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.125
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7bbb9": {
+      "importer": "gltf-scene",
+      "uuid": "e5e90542-9f4f-46ff-ac63-7b4d36c7e15a@7bbb9",
+      "displayName": "",
+      "id": "7bbb9",
+      "name": "anjisi@skill1.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 1.125,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "skill1",
+            "from": 0,
+            "to": 1.125,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "e5e90542-9f4f-46ff-ac63-7b4d36c7e15a@7bbb9",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "e5e90542-9f4f-46ff-ac63-7b4d36c7e15a@7bbb9"
+      ]
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "2a9963b9-87de-4b31-8f03-73183b597b4e",
+  "files": [],
+  "subMetas": {
+    "28781": {
+      "importer": "gltf-scene",
+      "uuid": "2a9963b9-87de-4b31-8f03-73183b597b4e@28781",
+      "displayName": "",
+      "id": "28781",
+      "name": "caobao.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "46540": {
+      "importer": "gltf-mesh",
+      "uuid": "2a9963b9-87de-4b31-8f03-73183b597b4e@46540",
+      "displayName": "",
+      "id": "46540",
+      "name": "Box001.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "2a9963b9-87de-4b31-8f03-73183b597b4e@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 29
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3efb2": {
+      "importer": "texture",
+      "uuid": "2a9963b9-87de-4b31-8f03-73183b597b4e@3efb2",
+      "displayName": "",
+      "id": "3efb2",
+      "name": "贴图 #0.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 1,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/seedTestRes/fbx/caibao/materials/qiangdao.png"
+      },
+      "ver": "1.0.20",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "958b3": {
+      "importer": "gltf-material",
+      "uuid": "2a9963b9-87de-4b31-8f03-73183b597b4e@958b3",
+      "displayName": "",
+      "id": "958b3",
+      "name": "Material #1.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "贴图 #0",
+        "uri": "db://assets/seedTestRes/fbx/caibao/materials/qiangdao.png"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "redirect": "2a9963b9-87de-4b31-8f03-73183b597b4e@28781",
+    "assetFinder": {
+      "meshes": [
+        "2a9963b9-87de-4b31-8f03-73183b597b4e@46540"
+      ],
+      "skeletons": [
+        "2a9963b9-87de-4b31-8f03-73183b597b4e@438fe"
+      ],
+      "textures": [
+        "2a9963b9-87de-4b31-8f03-73183b597b4e@3efb2"
+      ],
+      "materials": [
+        "2a9963b9-87de-4b31-8f03-73183b597b4e@958b3"
+      ],
+      "scenes": [
+        "2a9963b9-87de-4b31-8f03-73183b597b4e@28781"
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "d574e308-3aa2-433a-a2b7-5ac7c6dbcf35",
+  "files": [],
+  "subMetas": {
+    "36760": {
+      "importer": "gltf-scene",
+      "uuid": "d574e308-3aa2-433a-a2b7-5ac7c6dbcf35@36760",
+      "displayName": "",
+      "id": "36760",
+      "name": "qadls@skill3_loop.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "9bb2d": {
+      "importer": "gltf-animation",
+      "uuid": "d574e308-3aa2-433a-a2b7-5ac7c6dbcf35@9bb2d",
+      "displayName": "",
+      "id": "9bb2d",
+      "name": "skill3_loop.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 0.75
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.75,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "skill3_loop",
+            "from": 0,
+            "to": 0.75,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "d574e308-3aa2-433a-a2b7-5ac7c6dbcf35@36760",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "d574e308-3aa2-433a-a2b7-5ac7c6dbcf35@36760"
+      ]
+    }
+  }
+}

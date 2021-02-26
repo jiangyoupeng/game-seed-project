@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "bf438c15-e1a8-4a51-b3af-02eac7a6889c",
+  "files": [],
+  "subMetas": {
+    "24c9f": {
+      "importer": "gltf-animation",
+      "uuid": "bf438c15-e1a8-4a51-b3af-02eac7a6889c@24c9f",
+      "displayName": "",
+      "id": "24c9f",
+      "name": "move.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.5833333730697632
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e6557": {
+      "importer": "gltf-scene",
+      "uuid": "bf438c15-e1a8-4a51-b3af-02eac7a6889c@e6557",
+      "displayName": "",
+      "id": "e6557",
+      "name": "anjisi@move.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 1.5833333730697632,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "move",
+            "from": 0,
+            "to": 1.5833333730697632,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "bf438c15-e1a8-4a51-b3af-02eac7a6889c@e6557",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "bf438c15-e1a8-4a51-b3af-02eac7a6889c@e6557"
+      ]
+    }
+  }
+}

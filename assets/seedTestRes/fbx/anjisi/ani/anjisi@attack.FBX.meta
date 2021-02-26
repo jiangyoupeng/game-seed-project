@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "a317c18f-f360-42e4-8631-a5e712d6c117",
+  "files": [],
+  "subMetas": {
+    "989ed": {
+      "importer": "gltf-animation",
+      "uuid": "a317c18f-f360-42e4-8631-a5e712d6c117@989ed",
+      "displayName": "",
+      "id": "989ed",
+      "name": "attack.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.125
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3d62b": {
+      "importer": "gltf-scene",
+      "uuid": "a317c18f-f360-42e4-8631-a5e712d6c117@3d62b",
+      "displayName": "",
+      "id": "3d62b",
+      "name": "anjisi@attack.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 1.125,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "attack",
+            "from": 0,
+            "to": 1.125,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "a317c18f-f360-42e4-8631-a5e712d6c117@3d62b",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "a317c18f-f360-42e4-8631-a5e712d6c117@3d62b"
+      ]
+    }
+  }
+}

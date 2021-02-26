@@ -1,0 +1,78 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "1694022d-faec-4248-bfda-d4f04f87e30a",
+  "files": [],
+  "subMetas": {
+    "13284": {
+      "importer": "gltf-scene",
+      "uuid": "1694022d-faec-4248-bfda-d4f04f87e30a@13284",
+      "displayName": "",
+      "id": "13284",
+      "name": "qiangdao@dead.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6018c": {
+      "importer": "gltf-animation",
+      "uuid": "1694022d-faec-4248-bfda-d4f04f87e30a@6018c",
+      "displayName": "",
+      "id": "6018c",
+      "name": "dead.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1.1666666269302368
+        },
+        "events": []
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "legacyFbxImporter": false,
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 1.1666666269302368,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "dead",
+            "from": 0,
+            "to": 1.1666666269302368,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "1694022d-faec-4248-bfda-d4f04f87e30a@13284",
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "1694022d-faec-4248-bfda-d4f04f87e30a@13284"
+      ]
+    }
+  }
+}

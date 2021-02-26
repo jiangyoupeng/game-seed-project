@@ -1,0 +1,106 @@
+{
+  "ver": "2.0.10",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "290712f6-4de3-4d9e-8580-2593e0bb2ecf",
+  "files": [],
+  "subMetas": {
+    "4cbc0": {
+      "importer": "gltf-mesh",
+      "uuid": "290712f6-4de3-4d9e-8580-2593e0bb2ecf@4cbc0",
+      "displayName": "",
+      "id": "4cbc0",
+      "name": "____003.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6e70c": {
+      "importer": "texture",
+      "uuid": "290712f6-4de3-4d9e-8580-2593e0bb2ecf@6e70c",
+      "displayName": "",
+      "id": "6e70c",
+      "name": "Map #1.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 1,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/seedTestRes/fbx/bomb/materials/bomb.png"
+      },
+      "ver": "1.0.20",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "9d093": {
+      "importer": "gltf-material",
+      "uuid": "290712f6-4de3-4d9e-8580-2593e0bb2ecf@9d093",
+      "displayName": "",
+      "id": "9d093",
+      "name": "Material #25.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "6f3f1": {
+      "importer": "gltf-scene",
+      "uuid": "290712f6-4de3-4d9e-8580-2593e0bb2ecf@6f3f1",
+      "displayName": "",
+      "id": "6f3f1",
+      "name": "bomb.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "Map #1",
+        "uri": "db://assets/seedTestRes/fbx/bomb/materials/bomb.png"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "redirect": "290712f6-4de3-4d9e-8580-2593e0bb2ecf@6f3f1",
+    "assetFinder": {
+      "meshes": [
+        "290712f6-4de3-4d9e-8580-2593e0bb2ecf@4cbc0"
+      ],
+      "skeletons": [],
+      "textures": [
+        "290712f6-4de3-4d9e-8580-2593e0bb2ecf@6e70c"
+      ],
+      "materials": [
+        "290712f6-4de3-4d9e-8580-2593e0bb2ecf@9d093"
+      ],
+      "scenes": [
+        "290712f6-4de3-4d9e-8580-2593e0bb2ecf@6f3f1"
+      ]
+    }
+  }
+}
